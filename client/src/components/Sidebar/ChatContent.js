@@ -35,6 +35,7 @@ const ChatContent = (props) => {
         <Typography className={classes.previewText}>
           {latestMessageText}
         </Typography>
+
       </Box>
     </Box>
   );

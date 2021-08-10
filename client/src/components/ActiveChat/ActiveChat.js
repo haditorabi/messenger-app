@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
 import { connect } from "react-redux";
-import { readMsg } from "../../store/utils/thunkCreators";
+import { readMsgs } from "../../store/utils/thunkCreators";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -78,7 +78,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       readMessages: (senderId) => {
-          dispatch(readMsg(senderId));
+          dispatch(readMsgs(senderId));
       },
   };
 };
