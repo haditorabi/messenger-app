@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  markAsRead,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -108,6 +109,41 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
+const markConvAsRead = async (recipientId, msgIds) => {
+  await axios.post("/api/conversations/read", {
+      recipientId,
+      msgIds,
+  });
+};
+
+const sendReadMsgs = (convId, msgIds) => {
+  socket.emit("read-messages", {
+      convId,
+      msgIds,
+  });
+};
+
+export const readMsgs = (conv => async (dispatch, getState) => {
+  try {
+      let userId = getState().user.id;
+      let recipientId = conv.otherUser.id;
+
+      let msgIds = [];
+      for (let message of conv.messages) {
+          if (!message.read && message.senderId !== userId) {
+              msgIds.push(message.id);
+          }
+      }
+
+      if (msgIds.length > 0) {
+          await markConvAsRead(recipientId, msgIds);
+          dispatch(markAsRead(conv.id, msgIds));
+          sendReadMsgs(conv.id, msgIds);
+      }
+  } catch (error) {
+      console.error(error);
+  }
+});
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
