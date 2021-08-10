@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
@@ -24,7 +24,10 @@ const ActiveChat = (props) => {
   const classes = useStyles();
   const { user } = props;
   const conversation = props.conversation || {};
-
+  const [, setConvState] = useState()
+  const forcerRender = () => {
+    setTimeout(() => { setConvState(Math.random()) }, 200)
+  }
   return (
     <Box className={classes.root}>
       {conversation.otherUser && (
@@ -43,6 +46,7 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               conversationId={conversation.id}
               user={user}
+              forceRender={forcerRender}
             />
           </Box>
         </>

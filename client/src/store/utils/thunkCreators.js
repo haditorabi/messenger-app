@@ -103,7 +103,7 @@ export const postMessage = (body) => async (dispatch) => {
       dispatch(setNewMessage(data.message));
     }
 
-    sendMessage(data, body);
+    await sendMessage(data, body);
   } catch (error) {
     console.error(error);
   }
