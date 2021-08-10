@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
 import { connect } from "react-redux";
+import { readMsg } from "../../store/utils/thunkCreators";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,12 +23,24 @@ const useStyles = makeStyles(() => ({
 
 const ActiveChat = (props) => {
   const classes = useStyles();
-  const { user } = props;
-  const conversation = props.conversation || {};
+  const { user, activeConv } = props;
+  const conversation = props.conversation;
+  const [currentConv, setCurrentConv] = useState(null);
+
+  useEffect(() => {
+      if (conversation && activeConv === currentConv) {
+          props.readMessages(conversation);
+      }
+  }, [activeConv, currentConv, conversation, props]);
+
+  useEffect(() => {
+      setCurrentConv(activeConv);
+  }, [activeConv, currentConv]);
+
 
   return (
     <Box className={classes.root}>
-      {conversation.otherUser && (
+      {conversation && conversation.otherUser && (
         <>
           <Header
             username={conversation.otherUser.username}
@@ -54,12 +67,21 @@ const ActiveChat = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    activeConv: state.activeConv,
     conversation:
-      state.conversations &&
+      state.conversations ?
       state.conversations.find(
         (conversation) => conversation.otherUser.username === state.activeConversation
-      )
+      ) : {},
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+      readMessages: (senderId) => {
+          dispatch(readMsg(senderId));
+      },
   };
 };
 
-export default connect(mapStateToProps, null)(ActiveChat);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveChat);
