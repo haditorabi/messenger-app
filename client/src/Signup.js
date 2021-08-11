@@ -87,8 +87,13 @@ const Signup = (props) => {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
       return;
     }
+    if (username && email && password) {
+      await register({ username, email, password });
+    } else {
+      setErrorMessage("Enter username & password");
+      setSnackBarOpen(true);
+    }
 
-    await register({ username, email, password });
   };
 
   if (user.id) {
