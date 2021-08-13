@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     padding: "2vh 5vw 0 0"
   },
-  formBtn: {
+  formButton: {
     color: theme.palette.primary.main
   },
   createBtnContainer: {
@@ -141,7 +141,7 @@ const Signup = (props) => {
               size='large'
               onClick={() => history.push("/login")}
               component={Paper}
-              className={classes.formBtn}
+              className={classes.formButton}
             >
               Login
             </Button>
