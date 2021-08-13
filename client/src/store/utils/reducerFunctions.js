@@ -27,11 +27,12 @@ export const markMsgAsRead = (state, conversationId, messageIds) => {
           const convoCopy = { ...convo };
             for (let message of convoCopy.messages) {
               if (messageIds.includes(message.id)) {
-                  message["read"] = true;
+                  message["isRead"] = true;
               }
           }
           convoCopy.numUnread = 0;
-          convoCopy.lastRead = messageIds[messageIds.length - 1];
+          const lastMsg = messageIds.length - 1;
+          convoCopy.lastRead = messageIds[lastMsg];
           return convoCopy;
       } else {
           return convo;

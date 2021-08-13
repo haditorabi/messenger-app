@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UnreadMsgNumber = (props) => {
+const UnreadMsgCount = (props) => {
     const classes = useStyles();
 
     return (
@@ -39,4 +39,4 @@ const UnreadMsgNumber = (props) => {
     );
 };
 
-export default UnreadMsgNumber;
+export default UnreadMsgCount;

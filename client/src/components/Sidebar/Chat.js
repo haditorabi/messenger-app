@@ -4,7 +4,7 @@ import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
 import { connect } from "react-redux";
-import UnreadMsgNumber from "./UnreadMsgNumber";
+import UnreadMsgCount from "./UnreadMsgCount";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,7 @@ const Chat = (props) => {
       />
       <ChatContent conversation={conversation} />
       {conversation.numUnread > 0 && (
-                <UnreadMsgNumber value={conversation.numUnread} />
+                <UnreadMsgCount value={conversation.numUnread} />
           )}
     </Box>
   );

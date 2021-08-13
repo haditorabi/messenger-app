@@ -102,7 +102,7 @@ router.get("/", async (req, res, next) => {
         }
         
         const messages = await Message.update(
-          { read: true },
+          { isRead: true },
           {
             where: {
               id: {
@@ -124,7 +124,7 @@ router.get("/", async (req, res, next) => {
       const findLastRead = (messages, userId) => {
         for (var i = messages.length - 1; i >= 0; i--) {
           if (
-            (messages[i].read && messages[i].senderId === userId) ||
+            (messages[i].isRead && messages[i].senderId === userId) ||
             messages[i].senderId !== userId
             ) {
               return messages[i].id;

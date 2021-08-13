@@ -94,9 +94,9 @@ const sendMessage = (data, body) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
-export const postMessage = (body) => async (dispatch) => {
+export const postMessage = (body) => (dispatch) => {
   try {
-    const data = await saveMessage(body);
+    const data = saveMessage(body);
 
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
@@ -130,7 +130,7 @@ export const readMsgs = (conv => async (dispatch, getState) => {
 
       let msgIds = [];
       for (let message of conv.messages) {
-          if (!message.read && message.senderId !== userId) {
+          if (!message.isRead && message.senderId !== userId) {
               msgIds.push(message.id);
           }
       }
