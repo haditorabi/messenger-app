@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { SnackbarError } from "./components";
 import {
   Grid,
   Box,
@@ -10,8 +9,9 @@ import {
   FormControl,
   TextField,
   FormHelperText,
-  Avatar
 } from "@material-ui/core";
+import { SnackbarError } from "./components";
+import { LinkButtonContainer, SidebarImage } from "./components/Login";
 import Paper from "@material-ui/core/Paper";
 import { register } from "./store/utils/thunkCreators";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,14 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     fontFamily: theme.typography.fontFamily
   },
-  formContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "2vh 5vw 0 0"
-  },
-  formButton: {
+  formBtn: {
     color: theme.palette.primary.main
   },
   createBtnContainer: {
@@ -52,22 +45,7 @@ const useStyles = makeStyles((theme) => ({
   formControlChildren: {
     width: "100%"
   },
-  backgroundContainer: {
-    backgroundImage: `linear-gradient(to bottom, rgba(58,141,255,0.85),rgb(134,185,255,0.85)),url(./assets/img/bg-img.png)`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  backgroundText: {
-    flexDirection: "column",
-    color: "white",
-    textAlign: "center"
-  }
 }));
-
 
 const Signup = (props) => {
   const classes = useStyles();
@@ -111,43 +89,19 @@ const Signup = (props) => {
         />
       )}
       <Grid container className={classes.container}>
-        <Grid item sm={4} md={4} className={classes.backgroundContainer}>
-        <Box display={{ xs: "none", sm: "block", md: "block" }}>
-          <Avatar alt={'converse anywhere'} src={"./assets/img/bubble.svg"} ></Avatar>
-
-        </Box>
-        <Box
-          component='span'
-          display={{ xs: "none", sm: "block", md: "block" }}
-          m={1}
-        />
-        <Box
-          component='grid'
-          display={{ xs: "none", sm: "flex", md: "flex" }}
-          className={classes.backgroundText}
-        >
-          <Typography component='h4' variant='h4'>
-            Converse with anyone
-          </Typography>
-          <Typography component='h4' variant='h4'>
-            with any language
-          </Typography>
-        </Box>
-      </Grid>
-
-        <Grid item xs={12} sm={8} md={8} elevation={6} square>
-          <Grid item className={classes.formContainer}>
+        <SidebarImage />
+        <Grid item xs={12} sm={8} md={7} elevation={6} square>
+          <LinkButtonContainer>
             <Typography>Already have an account?</Typography>
             <Box component='span' m={1} />
             <Button
-              size='large'
-              onClick={() => history.push("/login")}
               component={Paper}
-              className={classes.formButton}
+              onClick={() => history.push("/login")}
+              className={classes.formBtn}
             >
               Login
             </Button>
-          </Grid>
+          </LinkButtonContainer>
           <Box component='span' m={1} />
           <Box className={classes.formControlContainer}>
             <form onSubmit={handleRegister}>
