@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: "2vh 5vw 0 0"
+        padding: "2vh 5vw 0 0",
+        marginTop: "20px"
       }
 }));
 

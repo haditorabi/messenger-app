@@ -18,28 +18,36 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     height: "100vh",
-    fontFamily: theme.typography.fontFamily
+    fontFamily: theme.typography.fontFamily,
   },
   formBtn: {
+    padding: "17px 30px",
+    marginRight: "40px",
+    boxShadow : "0 6px 10px rgba(0,0,0,0.09), 0 2px 3px rgba(0,0,0,0.13)",    
     color: theme.palette.primary.main
   },
-  createBtnContainer: {
+  loginBtnContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
   },
-  createBtn: {
+  loginBtn: {
+    fontFamily: 'Helvetica, Arial',
+    padding: "17px 55px",
     color: "white",
     backgroundColor: theme.palette.primary.main
   },
   formControlContainer: {
     display: "flex",
-    width: "50%",
+    width: "70%",
     justifyContent: "center",
     flexDirection: "column",
-    paddingLeft: "25%",
-    paddingTop: "15%"
+    paddingTop: "15%",
+    margin: "auto"
+  },
+  formTitle: {
+    fontWeight: "600"
   },
   formControlChildren: {
     width: "100%"
@@ -81,9 +89,9 @@ const Login = (props) => {
       )}
       <Grid container className={classes.container}>
         <SidebarImage/>
-        <Grid item xs={12} sm={8} md={7} elevation={6} square>
+        <Grid item xs={12} sm={7} md={7} elevation={6}>
           <LinkButtonContainer>
-            <Typography>Don't have an account?</Typography>
+            <Typography color="textSecondary">Don't have an account?</Typography>
             <Box component='span' m={1} />
             <Button
               component={Paper}
@@ -98,7 +106,7 @@ const Login = (props) => {
             <form onSubmit={handleLogin}>
               <Grid>
                 <Grid item>
-                  <Typography variant='h4'>Welcome Back!</Typography>
+                  <Typography component='h5' variant='h5' className={classes.formTitle}>Welcome back!</Typography>
                 </Grid>
                 <Grid item>
                   <FormControl
@@ -108,7 +116,7 @@ const Login = (props) => {
                   >
                     <TextField
                       aria-label='username'
-                      label='Username'
+                      label='E-mail address'
                       name='username'
                       type='text'
                     />
@@ -121,8 +129,8 @@ const Login = (props) => {
                     required
                   >
                     <TextField
-                      label='password'
-                      aria-label='password'
+                      label='Password'
+                      aria-label='Password'
                       type='password'
                       name='password'
                     />
@@ -133,7 +141,7 @@ const Login = (props) => {
               <Grid item className={classes.loginBtnContainer}>
                 <Button
                   type='submit'
-                  className={classes.formBtn}
+                  className={classes.loginBtn}
                   variant='contained'
                   size='large'
                 >

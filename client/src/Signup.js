@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.fontFamily
   },
   formBtn: {
+    textAlign:"center",
+    marginRight: "30px",
+    padding: "17px 35px",
+    boxShadow : "0 6px 10px rgba(0,0,0,0.09), 0 2px 3px rgba(0,0,0,0.13)",    
     color: theme.palette.primary.main
   },
   createBtnContainer: {
@@ -31,17 +35,22 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center"
   },
   createBtn: {
+    fontFamily: 'Helvetica, Arial',
+    padding: "17px 50px",
     color: "white",
     backgroundColor: theme.palette.primary.main
   },
   formControlContainer: {
     display: "flex",
-    width: "50%",
+    width: "70%",
     justifyContent: "center",
     flexDirection: "column",
-    paddingLeft: "25%",
-    paddingTop: "15%"
+    paddingTop: "15%",
+    margin: "auto"
   },
+  formTitle: {
+    fontWeight: "600"
+  },  
   formControlChildren: {
     width: "100%"
   },
@@ -90,9 +99,9 @@ const Signup = (props) => {
       )}
       <Grid container className={classes.container}>
         <SidebarImage />
-        <Grid item xs={12} sm={8} md={7} elevation={6} square>
+        <Grid item xs={12} sm={7} md={7}>
           <LinkButtonContainer>
-            <Typography>Already have an account?</Typography>
+            <Typography color="textSecondary">Already have an account?</Typography>
             <Box component='span' m={1} />
             <Button
               component={Paper}
@@ -107,7 +116,7 @@ const Signup = (props) => {
             <form onSubmit={handleRegister}>
               <Grid>
                 <Grid item>
-                  <Typography component='h4' variant='h4'>
+                  <Typography component='h5' variant='h5' className={classes.formTitle}>
                     Create an account.
                   </Typography>
                 </Grid>
@@ -147,25 +156,6 @@ const Signup = (props) => {
                       type='password'
                       inputProps={{ minLength: 6 }}
                       name='password'
-                      required
-                    />
-                    <FormHelperText>
-                      {formErrorMessage.confirmPassword}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Box component='span' m={1} />
-                <Grid item>
-                  <FormControl
-                    error={!!formErrorMessage.confirmPassword}
-                    className={classes.formControlChildren}
-                  >
-                    <TextField
-                      label='Confirm Password'
-                      aria-label='confirm password'
-                      type='password'
-                      inputProps={{ minLength: 6 }}
-                      name='confirmPassword'
                       required
                     />
                     <FormHelperText>

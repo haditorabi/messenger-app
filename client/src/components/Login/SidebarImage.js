@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SidebarImage = () => {
     const classes = useStyles();
     return (
-    <Grid item sm={4} md={4} className={classes.backgroundContainer}>
+    <Grid item sm={5} md={5} className={classes.backgroundContainer}>
         <Box display={{ xs: "none", sm: "block", md: "block" }}>
             <Avatar alt={'converse anywhere'} src={"./assets/img/bubble.svg"} ></Avatar>
         </Box>
@@ -30,7 +30,6 @@ const SidebarImage = () => {
         m={1}
         />
         <Box
-        component='grid'
         display={{ xs: "none", sm: "flex", md: "flex" }}
         className={classes.backgroundText}
         >
