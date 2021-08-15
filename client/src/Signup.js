@@ -10,6 +10,7 @@ import {
   FormControl,
   TextField,
   FormHelperText,
+  Avatar
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { register } from "./store/utils/thunkCreators";
@@ -112,7 +113,8 @@ const Signup = (props) => {
       <Grid container className={classes.container}>
         <Grid item sm={4} md={4} className={classes.backgroundContainer}>
         <Box display={{ xs: "none", sm: "block", md: "block" }}>
-          <img src="./assets/img/bubble.svg" alt='converse anywhere' />
+          <Avatar alt={'converse anywhere'} src={"./assets/img/bubble.svg"} ></Avatar>
+
         </Box>
         <Box
           component='span'
