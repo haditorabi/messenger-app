@@ -26,21 +26,19 @@ const ActiveChat = (props) => {
   const { user, activeConv } = props;
   const conversation = props.conversation;
   const [currentConv, setCurrentConv] = useState(null);
-
   useEffect(() => {
-      if (conversation && activeConv === currentConv) {
-          props.readMessages(conversation);
-      }
+    if (conversation && activeConv?.id === currentConv?.id) {
+      props.readMessages(conversation);
+    }
   }, [activeConv, currentConv, conversation, props]);
-
+  
   useEffect(() => {
-      setCurrentConv(activeConv);
+    setCurrentConv(activeConv);
   }, [activeConv, currentConv]);
-
 
   return (
     <Box className={classes.root}>
-      {conversation && conversation.otherUser && (
+      {conversation?.otherUser && (
         <>
           <Header
             username={conversation.otherUser.username}
@@ -69,10 +67,9 @@ const mapStateToProps = (state) => {
     user: state.user,
     activeConv: state.activeConv,
     conversation:
-      state.conversations ?
-      state.conversations.find(
+      state.conversations?.find(
         (conversation) => conversation.otherUser.username === state.activeConversation
-      ) : {},
+      ) ?? {},
   };
 };
 const mapDispatchToProps = (dispatch) => {

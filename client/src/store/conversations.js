@@ -16,7 +16,7 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
-const MARK_AS_READ_CONVERSATION = "MARK_AS_READ_CONVERSATION";
+const MARK_CONVERSATION_AS_READ = "MARK_CONVERSATION_AS_READ";
 
 
 // ACTION CREATORS
@@ -70,9 +70,9 @@ export const addConversation = (recipientId, newMessage) => {
   };
 };
 
-export const markAsRead = (conversationId, messageIds) => {
+export const markConversationAsRead = (conversationId, messageIds) => {
   return {
-      type: MARK_AS_READ_CONVERSATION,
+      type: MARK_CONVERSATION_AS_READ,
       payload: { conversationId, messageIds },
   };
 };
@@ -100,11 +100,13 @@ const reducer = (state = [], action) => {
         action.payload.recipientId,
         action.payload.newMessage
       );
-      case MARK_AS_READ_CONVERSATION:
+      case MARK_CONVERSATION_AS_READ:
+        const {conversationId, messageIds} = action.payload;
+
         return markMsgAsRead(
             state,
-            action.payload.conversationId,
-            action.payload.messageIds
+            conversationId,
+            messageIds
         );      
     default:
       return state;

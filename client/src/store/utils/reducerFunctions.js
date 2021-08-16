@@ -30,7 +30,7 @@ export const markMsgAsRead = (state, conversationId, messageIds) => {
                   message["isRead"] = true;
               }
           }
-          convoCopy.numUnread = 0;
+          convoCopy.unReadMsgsCount = 0;
           const lastMsg = messageIds.length - 1;
           convoCopy.lastRead = messageIds[lastMsg];
           return convoCopy;

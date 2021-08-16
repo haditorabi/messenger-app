@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
         },
       },
       attributes: ["id"],
-      order: [[Message, "createdAt", "ASC"]],
+      order: [[Message, "createdAt", "DESC"]],
       include: [
         { model: Message, order: ["createdAt", "DESC"] },
         {
@@ -71,7 +71,7 @@ router.get("/", async (req, res, next) => {
       // set properties for notification count and latest message preview
       const lastIdx = convoJSON.messages.length - 1;
       convoJSON.latestMessageText = convoJSON.messages[lastIdx].text;
-      convoJSON.numUnread = convoJSON.messages.filter(
+      convoJSON.unReadMsgsCount = convoJSON.messages.filter(
         (msg) => !msg.read && msg.senderId !== userId
         ).length;
         convoJSON.lastRead = findLastRead(convoJSON.messages, userId);
@@ -83,14 +83,13 @@ router.get("/", async (req, res, next) => {
       next(error);
     }
   });
-  router.post("/read", async (req, res, next) => {
+  router.put("/read", async (req, res, next) => {
     try {
       if (!req.user) {
         return res.sendStatus(401);
       }
       const senderId = req.user.id;
       const { msgIds, recipientId } = req.body;
-      // console.log("Length", req.body)
 
       const conversation = await Conversation.findConversation(
         senderId,
@@ -122,12 +121,13 @@ router.get("/", async (req, res, next) => {
       });
       
       const findLastRead = (messages, userId) => {
-        for (var i = messages.length - 1; i >= 0; i--) {
+        for (let i = messages.length - 1; i >= 0; i--) {
+          const msg = messages[i];
           if (
-            (messages[i].isRead && messages[i].senderId === userId) ||
-            messages[i].senderId !== userId
+            (msg.isRead && msg.senderId === userId) ||
+            msg.senderId !== userId
             ) {
-              return messages[i].id;
+              return msg.id;
       }
   }
   return -1;
