@@ -22,7 +22,7 @@ const SidebarImage = () => {
     return (
     <Grid item sm={5} md={5} className={classes.backgroundContainer}>
         <Box display={{ xs: "none", sm: "block", md: "block" }}>
-            <Avatar alt={'converse anywhere'} src={"./assets/img/bubble.svg"} ></Avatar>
+            <Avatar alt={'converse anywhere'} src={"./assets/img/bubble.svg"} />
         </Box>
         <Box
         component='span'
