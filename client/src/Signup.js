@@ -37,7 +37,7 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justify="center">
       <Box>
         <Grid container item>
           <Typography>Need to log in?</Typography>
