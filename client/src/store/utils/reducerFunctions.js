@@ -27,7 +27,7 @@ export const markMsgsAsRead = (state, conversationId, messages) => {
           const convoCopy = { ...convo };
           convoCopy.messages = convo.messages.map((message) => {
             const updatedMessage = messages.find((m) => m.id === message.id);
-            return updatedMessage ? updatedMessage : message;
+            return updatedMessage ?? message;
           });
     
           convoCopy.unReadMsgsCount = 0;

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         color: "white",
-        fontSize: 12,
-        fontFamily: "open-sans",
+        fontSize: theme.typography.fontSize,
+        fontFamily: theme.typography.fontFamily,
         fontWeight: "bolder",
     },
 }));
@@ -31,11 +31,11 @@ const UnreadMsgCount = (props) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <div className={classes.background}>
+        <Box className={classes.root}>
+            <Box className={classes.background}>
                 <Typography className={classes.text}>{props.value}</Typography>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

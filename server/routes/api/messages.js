@@ -20,8 +20,7 @@ router.post("/", async (req, res, next) => {
     let conversation = await Conversation.findConversation(
       senderId,
       recipientId
-  );
-
+    );
 
     if (!conversation) {
       // create conversation

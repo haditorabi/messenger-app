@@ -97,7 +97,7 @@ router.get("/", async (req, res, next) => {
       );
         
       if (!conversation) {
-        return res.sendStatus(403);
+        return res.sendStatus(404);
       }
         
       const messages = await Message.update(
