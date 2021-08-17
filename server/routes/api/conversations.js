@@ -72,7 +72,7 @@ router.get("/", async (req, res, next) => {
       const lastIdx = convoJSON.messages.length - 1;
       convoJSON.latestMessageText = convoJSON.messages[lastIdx].text;
       convoJSON.unReadMsgsCount = convoJSON.messages.filter(
-        (msg) => !msg.read && msg.senderId !== userId
+        (msg) => !msg.isRead && msg.senderId !== userId
         ).length;
         convoJSON.lastRead = findLastRead(convoJSON.messages, userId);
         conversations[i] = convoJSON;
