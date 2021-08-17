@@ -94,40 +94,39 @@ router.get("/", async (req, res, next) => {
       const conversation = await Conversation.findConversation(
         senderId,
         recipientId
-        );
+      );
         
-        if (!conversation) {
-          return res.sendStatus(403);
-        }
+      if (!conversation) {
+        return res.sendStatus(403);
+      }
         
-        const messages = await Message.update(
-          { isRead: true },
-          {
-            where: {
-              id: {
-                [Op.in]: msgIds,
-              },
-            },
-          }
-          );
-          
-          if (!messages) {
-            res.sendStatus(500);
-          }
-          res.sendStatus(200);
-        } catch (error) {
-          next(error);
-        }
-      });
+      const messages = await Message.update(
+        { isRead: true },
+        {
+        where: {
+          id: {
+            [Op.in]: msgIds,
+          },
+        },
+      }
+      );
+        
+      if (!messages) {
+        res.sendStatus(500);
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  });
       
-      const findLastRead = (messages, userId) => {
-        for (let i = messages.length - 1; i >= 0; i--) {
-          const msg = messages[i];
-          if (
-            (msg.isRead && msg.senderId === userId) ||
-            msg.senderId !== userId
-            ) {
-              return msg.id;
+  const findLastRead = (messages, userId) => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const msg = messages[i];
+      if (
+        (msg.isRead && msg.senderId === userId)
+        ) {
+          return msg.id;
       }
   }
   return -1;

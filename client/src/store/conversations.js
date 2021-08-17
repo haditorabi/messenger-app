@@ -4,7 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
-  markMsgAsRead
+  markMsgsAsRead
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -102,8 +102,7 @@ const reducer = (state = [], action) => {
       );
       case MARK_CONVERSATION_AS_READ:
         const {conversationId, messageIds} = action.payload;
-
-        return markMsgAsRead(
+        return markMsgsAsRead(
             state,
             conversationId,
             messageIds

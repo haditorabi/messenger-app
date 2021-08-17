@@ -21,18 +21,18 @@ export const addMessageToStore = (state, payload) => {
     }
   });
 };
-export const markMsgAsRead = (state, conversationId, messageIds) => {
+export const markMsgsAsRead = (state, conversationId, messages) => {
   return state.map((convo) => {
       if (convo.id === conversationId) {
           const convoCopy = { ...convo };
-            for (let message of convoCopy.messages) {
-              if (messageIds.includes(message.id)) {
-                  message["isRead"] = true;
-              }
-          }
+          convoCopy.messages = convo.messages.map((message) => {
+            const updatedMessage = messages.find((m) => m.id === message.id);
+            return updatedMessage ? updatedMessage : message;
+          });
+    
           convoCopy.unReadMsgsCount = 0;
-          const lastMsg = messageIds.length - 1;
-          convoCopy.lastRead = messageIds[lastMsg];
+          const lastMsg = messages.length - 1;
+          convoCopy.lastRead = messages[lastMsg];
           return convoCopy;
       } else {
           return convo;

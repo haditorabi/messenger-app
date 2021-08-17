@@ -38,6 +38,7 @@ const Home = (props) => {
   const handleLogout = async () => {
     await logout(user.id);
   };
+  
   return (
     <>
       {/* logout button will eventually be in a dropdown next to username */}

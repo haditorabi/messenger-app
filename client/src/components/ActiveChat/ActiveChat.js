@@ -26,12 +26,22 @@ const ActiveChat = (props) => {
   const { user, activeConv } = props;
   const conversation = props.conversation;
   const [currentConv, setCurrentConv] = useState(null);
+
   useEffect(() => {
     if (conversation && activeConv?.id === currentConv?.id) {
-      props.readMessages(conversation);
+      props.readMsgs(conversation);
     }
   }, [activeConv, currentConv, conversation, props]);
-  
+
+  useEffect(() => {
+    if (
+      conversation?.unReadMsgsCount > 0 &&
+      activeConv === currentConv
+    ) {
+      props.readMsgs(conversation);
+    }
+  }, [activeConv, currentConv, conversation, props]);
+
   useEffect(() => {
     setCurrentConv(activeConv);
   }, [activeConv, currentConv]);
@@ -49,6 +59,7 @@ const ActiveChat = (props) => {
               messages={conversation.messages}
               otherUser={conversation.otherUser}
               userId={user.id}
+              lastRead={conversation.lastRead}
             />
             <Input
               otherUser={conversation.otherUser}
@@ -68,13 +79,13 @@ const mapStateToProps = (state) => {
     activeConv: state.activeConv,
     conversation:
       state.conversations?.find(
-        (conversation) => conversation.otherUser.username === state.activeConversation
+        (conversation) => conversation.otherUser.username === state.activeConv
       ) ?? {},
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-      readMessages: (senderId) => {
+      readMsgs: (senderId) => {
           dispatch(readMsgs(senderId));
       },
   };
