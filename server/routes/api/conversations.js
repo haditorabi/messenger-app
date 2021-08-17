@@ -3,6 +3,7 @@ const { User, Conversation, Message } = require("../../db/models");
 const { Op } = require("sequelize");
 const onlineUsers = require("../../onlineUsers");
 
+
 // get all conversations for a user, include latest message text for preview, and all messages
 // include other user model so we have info on username/profile pic (don't include current user info)
 router.get("/", async (req, res, next) => {
@@ -46,11 +47,11 @@ router.get("/", async (req, res, next) => {
         },
       ],
     });
-
+    
     for (let i = 0; i < conversations.length; i++) {
       const convo = conversations[i];
       const convoJSON = convo.toJSON();
-
+      
       // set a property "otherUser" so that frontend will have easier access
       if (convoJSON.user1) {
         convoJSON.otherUser = convoJSON.user1;
@@ -59,23 +60,76 @@ router.get("/", async (req, res, next) => {
         convoJSON.otherUser = convoJSON.user2;
         delete convoJSON.user2;
       }
-
+      
       // set property for online status of the other user
       if (onlineUsers.includes(convoJSON.otherUser.id)) {
         convoJSON.otherUser.online = true;
       } else {
         convoJSON.otherUser.online = false;
       }
-
+      
       // set properties for notification count and latest message preview
-      convoJSON.latestMessageText = convoJSON.messages[0].text;
-      conversations[i] = convoJSON;
+      const lastIdx = convoJSON.messages.length - 1;
+      convoJSON.latestMessageText = convoJSON.messages[lastIdx].text;
+      convoJSON.unReadMsgsCount = convoJSON.messages.filter(
+        (msg) => !msg.isRead && msg.senderId !== userId
+        ).length;
+        convoJSON.lastRead = findLastRead(convoJSON.messages, userId);
+        conversations[i] = convoJSON;
+      }
+      
+      res.json(conversations);
+    } catch (error) {
+      next(error);
     }
+  });
+  router.put("/read", async (req, res, next) => {
+    try {
+      if (!req.user) {
+        return res.sendStatus(401);
+      }
+      const senderId = req.user.id;
+      const { msgIds, recipientId } = req.body;
 
-    res.json(conversations);
-  } catch (error) {
-    next(error);
+      const conversation = await Conversation.findConversation(
+        senderId,
+        recipientId
+      );
+        
+      if (!conversation) {
+        return res.sendStatus(404);
+      }
+        
+      const messages = await Message.update(
+        { isRead: true },
+        {
+        where: {
+          id: {
+            [Op.in]: msgIds,
+          },
+        },
+      }
+      );
+        
+      if (!messages) {
+        res.sendStatus(500);
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  });
+      
+  const findLastRead = (messages, userId) => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const msg = messages[i];
+      if (
+        (msg.isRead && msg.senderId === userId)
+        ) {
+          return msg.id;
+      }
   }
-});
+  return -1;
+};
 
 module.exports = router;

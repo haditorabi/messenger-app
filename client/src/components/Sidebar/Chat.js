@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     "&:hover": {
       cursor: "grab"
-    }
+    }, 
   }
 }));
 
@@ -29,7 +29,7 @@ const Chat = (props) => {
   };
 
   return (
-    <Box onClick={() => handleClick(conversation)} className={classes.root}>
+    <Box onClick={() => handleClick(conversation)} className={classes.root} >
       <BadgeAvatar
         photoUrl={otherUser.photoUrl}
         username={otherUser.username}
