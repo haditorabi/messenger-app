@@ -21,14 +21,14 @@ const SnackbarError = (props) => {
       onClose={() => props.setSnackBarOpen(false)}
       message={props.errorMessage || "Sorry, an error occured. Please try again"}
       action={
-        <React.Fragment>
+        <>
           <Button
             className={classes.icon}
             size="small"
             onClick={() => props.setSnackBarOpen(false)}>
             <Close color="secondary" />
           </Button>
-        </React.Fragment>
+        </>
       }
       ContentProps={{
         classes: {
